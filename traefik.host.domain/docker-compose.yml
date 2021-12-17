@@ -41,23 +41,23 @@ services:
       - traefik.http.middlewares.http-to-https.redirectscheme.scheme=https
       - traefik.http.middlewares.http-to-https.redirectscheme.permanent=true
       ### Section HTTP
-      - traefik.http.routers.http-traefik_bjphoster_com.entrypoints=http
+      - traefik.http.routers.http-traefik_host.domain.entrypoints=http
       # only some people can access the dashboard, hence protect it with it's whitelist
-      - traefik.http.routers.http-traefik_bjphoster_com.middlewares=dashboard-whitelist
+      - traefik.http.routers.http-traefik_host.domain.middlewares=dashboard-whitelist
       # redirect Træfik dashboard to HTTPS only
-      - traefik.http.routers.http-traefik_bjphoster_com.middlewares=http-to-https
-      - traefik.http.routers.http-traefik_bjphoster_com.rule=Host(`traefik.bjphoster.com`)
-      - traefik.http.routers.http-traefik_bjphoster_com.service=api@internal
+      - traefik.http.routers.http-traefik_host.domain.middlewares=http-to-https
+      - traefik.http.routers.http-traefik_host.domain.rule=Host(`traefik.host.domain`)
+      - traefik.http.routers.http-traefik_host.domain.service=api@internal
       ### Section HTTPS
-      - traefik.http.routers.https-traefik_bjphoster_com.entrypoints=https
+      - traefik.http.routers.https-traefik_host.domain.entrypoints=https
       # only some people can access the dashboard, hence protect it with it's whitelist
-      - traefik.http.routers.https-traefik_bjphoster_com.middlewares=dashboard-whitelist
+      - traefik.http.routers.https-traefik_host.domain.middlewares=dashboard-whitelist
       # configure Træfik dashboard to be the exposed service
-      - traefik.http.routers.https-traefik_bjphoster_com.rule=Host(`traefik.bjphoster.com`)
-      - traefik.http.routers.https-traefik_bjphoster_com.service=api@internal
+      - traefik.http.routers.https-traefik_host.domain.rule=Host(`traefik.host.domain`)
+      - traefik.http.routers.https-traefik_host.domain.service=api@internal
       # of course, enable TLS and it's certificate provider
-      - traefik.http.routers.https-traefik_bjphoster_com.tls=true
-      - traefik.http.routers.https-traefik_bjphoster_com.tls.certresolver=letsencrypt
+      - traefik.http.routers.https-traefik_host.domain.tls=true
+      - traefik.http.routers.https-traefik_host.domain.tls.certresolver=letsencrypt
     networks:
       - traefik-proxy
     ports:
