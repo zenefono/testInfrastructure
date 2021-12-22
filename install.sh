@@ -17,24 +17,22 @@ changeBjphosterDomain(){ # usage: changeBjphoster "${serviceName}"
 
 setupServiceTraefik(){
 	
-	changeBjphosterDomain "${ENVreverseProxyData[name]}"
+	changeBjphosterDomain "${serviceName}"
 	
-	sed -i "s/1.2.3.4/${ENVadminClientData[ipaddr]}/g" ./"${ENVreverseProxyData[name]}"."${hostDomain}"/"${dotEnvModel}"
+	sed -i "s/1.2.3.4/${ENVadminClientData[ipaddr]}/g" ./"${serviceName}"."${hostDomain}"/"${dotEnvModel}"
 	
-	sed -i "s/HETZNER_API_KEY=/HETZNER_API_KEY=${ENVcertificateProviderData[apykey]}/g" ./"${ENVreverseProxyData[name]}"."${hostDomain}"/"${dotEnvModel}"
+	sed -i "s/HETZNER_API_KEY=/HETZNER_API_KEY=${ENVcertificateProviderData[apykey]}/g" ./"${serviceName}"."${hostDomain}"/"${dotEnvModel}"
 	
-	mv ./"${ENVreverseProxyData[name]}"."${hostDomain}"/"${dotEnvModel}" ./"${ENVreverseProxyData[name]}"."${hostDomain}"/.env
+	touch ./"${serviceName}"."${hostDomain}"/le-certs.json
 	
-	touch ./"${ENVreverseProxyData[name]}"."${hostDomain}"/le-certs.json
-	
-	chmod 600 ./"${ENVreverseProxyData[name]}"."${hostDomain}"/le-certs.json
+	chmod 600 ./"${serviceName}"."${hostDomain}"/le-certs.json
 }
 
 setupServiceGet(){
 	
-	changeBjphosterDomain "${ENVtestServiceData[name]}"
+	changeBjphosterDomain "${serviceName}"
 	
-	sed -i "s|root /var/www/html;|root /var/www/html;\n  autoindex on;|" ./"${ENVtestServiceData[name]}"."${hostDomain}"/conf/site.conf
+	sed -i "s|root /var/www/html;|root /var/www/html;\n  autoindex on;|" ./"${serviceName}"."${hostDomain}"/conf/site.conf
 }
 
 setupFromPublicRepo(){ # usage: setupFromPublicRepo "hostDomain" "serviceName" "publicRepoUri" "dotEnvModel" "dataFolder" "configFolder"
@@ -48,6 +46,8 @@ setupFromPublicRepo(){ # usage: setupFromPublicRepo "hostDomain" "serviceName" "
 	git clone "${publicRepoUri}" ./"${serviceName}.${hostDomain}"
 	
 	rm -rf ./"${serviceName}.${hostDomain}"/.git
+	
+	mv ./"${serviceName}"."${hostDomain}"/"${dotEnvModel}" ./"${serviceName}"."${hostDomain}"/.env
 	
 	setupService"${serviceName^}" # bash (v. 4+) capitalized variable
 }
