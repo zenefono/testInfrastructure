@@ -59,8 +59,8 @@ main() {
 	
 	setupFromPublicRepo "${ENVhostServerData[domain]}" "${ENVtestServiceData[name]}" "${ENVtestServiceData[repo]}" "${ENVtestServiceData[envmodel]}"
 	
-	cd ./"${ENVreverseProxyData[name]}" ; docker-compose up -d
-	cd ../"${ENVtestServiceData[name]}" ; docker-compose up -d
+	cd ./"${ENVreverseProxyData[name]}"."${hostDomain}" && docker-compose up -d
+	cd ../"${ENVtestServiceData[name]}"."${hostDomain}" && docker-compose up -d
 	cd ..
 }
 
