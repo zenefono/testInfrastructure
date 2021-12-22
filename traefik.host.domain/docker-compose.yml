@@ -1,0 +1,74 @@
+version: "3"
+
+services:
+  traefik:
+    command:
+      # when debugging is needed
+      - --accesslog=false
+      # enable Træfik dashboard
+      - --api.dashboard=true
+      # configure Let's Encrypt automatic certificates
+      - --certificatesresolvers.letsencrypt.acme.dnschallenge=true
+      - --certificatesresolvers.letsencrypt.acme.dnschallenge.provider=hetzner
+      - --certificatesresolvers.letsencrypt.acme.email=${LETSENCRYPT_EMAIL}
+      - --certificatesresolvers.letsencrypt.acme.keytype=RSA4096
+      - --certificatesresolvers.letsencrypt.acme.storage=/le-certs.json
+      # we listen on both HTTP and HTTPS
+      - --entrypoints.http.address=:80
+      - --entrypoints.https.address=:443
+      # logging level
+      - --log.level=${TRAEFIK_LOGLEVEL}
+      # Træfik Pilot token (of course retrieved from dotenv)
+      - --pilot.token=${TRAEFIK_PILOT_TOKEN}
+      # we only use Docker (for now)
+      - --providers.docker=true
+      # and we want to manually specify exposed containers
+      - --providers.docker.exposedbydefault=false
+      - --providers.docker.watch=true
+      # should not need, but just in case, a dynamic config file is also configured
+      - --providers.file.directory=/dynamic-config
+      - --providers.file.watch=true
+    container_name: ${TRAEFIK_CONTAINER_NAME}
+    environment:
+      - HETZNER_API_KEY=${HETZNER_API_KEY}
+    image: traefik:${TRAEFIK_VERSION}
+    labels:
+      # expose Træfik using Træfik (dashboard)
+      - traefik.enable=true
+      # configure a global whitelist for my home
+      - traefik.http.middlewares.dashboard-whitelist.ipwhitelist.sourcerange=${TRAEFIK_DASHBOARD_WHITELIST}
+      # configure the global redirect middleware
+      - traefik.http.middlewares.http-to-https.redirectscheme.scheme=https
+      - traefik.http.middlewares.http-to-https.redirectscheme.permanent=true
+      ### Section HTTP
+      - traefik.http.routers.http-traefik_bjphoster_com.entrypoints=http
+      # only some people can access the dashboard, hence protect it with it's whitelist
+      - traefik.http.routers.http-traefik_bjphoster_com.middlewares=dashboard-whitelist
+      # redirect Træfik dashboard to HTTPS only
+      - traefik.http.routers.http-traefik_bjphoster_com.middlewares=http-to-https
+      - traefik.http.routers.http-traefik_bjphoster_com.rule=Host(`traefik.bjphoster.com`)
+      - traefik.http.routers.http-traefik_bjphoster_com.service=api@internal
+      ### Section HTTPS
+      - traefik.http.routers.https-traefik_bjphoster_com.entrypoints=https
+      # only some people can access the dashboard, hence protect it with it's whitelist
+      - traefik.http.routers.https-traefik_bjphoster_com.middlewares=dashboard-whitelist
+      # configure Træfik dashboard to be the exposed service
+      - traefik.http.routers.https-traefik_bjphoster_com.rule=Host(`traefik.bjphoster.com`)
+      - traefik.http.routers.https-traefik_bjphoster_com.service=api@internal
+      # of course, enable TLS and it's certificate provider
+      - traefik.http.routers.https-traefik_bjphoster_com.tls=true
+      - traefik.http.routers.https-traefik_bjphoster_com.tls.certresolver=letsencrypt
+    networks:
+      - traefik-proxy
+    ports:
+      - 80:80
+      - 443:443
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./config:/dynamic-config:ro
+      - ./le-certs.json:/le-certs.json
+
+networks:
+  traefik-proxy:
+    external: true

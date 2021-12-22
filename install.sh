@@ -15,7 +15,7 @@ changeBjphosterDomain(){ # usage: changeBjphoster "${serviceName}"
 	done
 }
 
-setupService"${ENVreverseProxyData[name]^}"(){
+setupServiceTraefik(){
 	
 	changeBjphosterDomain "${ENVreverseProxyData[name]}"
 	
@@ -30,7 +30,7 @@ setupService"${ENVreverseProxyData[name]^}"(){
 	chmod 600 ./"${ENVreverseProxyData[name]}"."${hostDomain}"/le-certs.json
 }
 
-setupService"${ENVtestServiceData[name]^}"(){
+setupServiceGet(){
 	
 	changeBjphosterDomain "${ENVtestServiceData[name]}"
 	
