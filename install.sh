@@ -6,10 +6,12 @@ source ./.env
 #+ anche in ./traefik[ecc..]/docker-compose.yml bisognerebbe sempre usare variabili,
 #+ in /get[ecc..]/docker-compose.yml sembra a posto ma ricontrolla
 
-changeBjphosterDomain(){ # usage: changeBjphoster "${serviceName}"
+changeBjphosterDomain(){ # usage: changeBjphosterDomain "${serviceName}" "${hostDomain}"
+	hostDomain1=$(echo "${hostDomain}" | sed 's/\./_/')
+	hostDomain2=$(echo "${hostDomain}" | sed 's/\.//')
 	for i in ./"${serviceName}"."${hostDomain}"/* ; do
-		for myCmd in "s/.bjphoster.com/.host.domain/g" "s/_bjphoster_com/_host_domain/g" \
-		"s/bjphostercom/hostdomain/g" ; do
+		for myCmd in "s/bjphoster.com/${hostDomain}/g" "s/bjphoster_com/${hostDomain1}/g" \
+		"s/bjphostercom/${hostDomain2}/g" ; do
 			sed -i "$myCmd" "$i"
 		done
 	done
@@ -17,7 +19,7 @@ changeBjphosterDomain(){ # usage: changeBjphoster "${serviceName}"
 
 setupServiceTraefik(){
 	
-	changeBjphosterDomain "${serviceName}"
+	changeBjphosterDomain "${serviceName}" "${hostDomain}"
 	
 	sed -i "s/1.2.3.4/${ENVadminClientData[ipaddr]}/g" ./"${serviceName}"."${hostDomain}"/"${dotEnvModel}"
 	
@@ -30,7 +32,7 @@ setupServiceTraefik(){
 
 setupServiceGet(){
 	
-	changeBjphosterDomain "${serviceName}"
+	changeBjphosterDomain "${serviceName}" "${hostDomain}"
 	
 	sed -i "s|root /var/www/html;|root /var/www/html;\n  autoindex on;|" ./"${serviceName}"."${hostDomain}"/conf/site.conf
 }
@@ -47,9 +49,9 @@ setupFromPublicRepo(){ # usage: setupFromPublicRepo "hostDomain" "serviceName" "
 	
 	rm -rf ./"${serviceName}.${hostDomain}"/.git
 	
-	mv ./"${serviceName}"."${hostDomain}"/"${dotEnvModel}" ./"${serviceName}"."${hostDomain}"/.env
-	
 	setupService"${serviceName^}" # bash (v. 4+) capitalized variable
+	
+	mv ./"${serviceName}"."${hostDomain}"/"${dotEnvModel}" ./"${serviceName}"."${hostDomain}"/.env
 }
 
 ##########################################
