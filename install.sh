@@ -7,23 +7,22 @@ source ./.env
 #+ in /get[ecc..]/docker-compose.yml sembra a posto ma ricontrolla
 
 changeBjphosterDomain(){ # usage: changeBjphosterDomain "${serviceName}" "${hostDomain}"
-	hostDomain1=$(echo "${hostDomain}" | sed 's/\./_/')
-	hostDomain2=$(echo "${hostDomain}" | sed 's/\.//')
+	hostDomain1=$(echo "${hostDomain}" | sed 's/\./_/g')
+	hostDomain2=$(echo "${hostDomain}" | sed 's/\.//g')
 	for i in ./"${serviceName}"."${hostDomain}"/* ; do
-		for myCmd in "s/bjphoster.com/${hostDomain}/g" "s/bjphoster_com/${hostDomain1}/g" \
+		for myCmd in "s/bjphoster\.com/${hostDomain}/g" "s/bjphoster_com/${hostDomain1}/g" \
 		"s/bjphostercom/${hostDomain2}/g" ; do
 			sed -i "$myCmd" "$i"
 		done
 	done
 }
 
-setupServiceTraefik(){
-	
+setupServiceTraefik(){	
 	changeBjphosterDomain "${serviceName}" "${hostDomain}"
 	
 	sed -i "s/1.2.3.4/${ENVadminClientData[ipaddr]}/g" ./"${serviceName}"."${hostDomain}"/"${dotEnvModel}"
 	
-	sed -i "s/HETZNER_API_KEY=/HETZNER_API_KEY=${ENVcertificateProviderData[apykey]}/g" ./"${serviceName}"."${hostDomain}"/"${dotEnvModel}"
+	sed -i "s/HETZNER_API_KEY=/HETZNER_API_KEY=${ENVcertificateProviderData[apikey]}/g" ./"${serviceName}"."${hostDomain}"/"${dotEnvModel}"
 	
 	touch ./"${serviceName}"."${hostDomain}"/le-certs.json
 	
@@ -61,9 +60,9 @@ main() {
 	
 	setupFromPublicRepo "${ENVhostServerData[domain]}" "${ENVtestServiceData[name]}" "${ENVtestServiceData[repo]}" "${ENVtestServiceData[envmodel]}"
 	
-	cd ./"${ENVreverseProxyData[name]}"."${hostDomain}" && docker-compose up -d
-	cd ../"${ENVtestServiceData[name]}"."${hostDomain}" && docker-compose up -d
-	cd ..
+#	cd ./"${ENVreverseProxyData[name]}"."${hostDomain}" && docker-compose up -d
+#	cd ../"${ENVtestServiceData[name]}"."${hostDomain}" && docker-compose up -d
+#	cd ..
 }
 
 main
