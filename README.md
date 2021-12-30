@@ -54,7 +54,7 @@ Mi reco nella cartella col file `docker-compose.yml` di Traefik e lo lancio con 
 ## Condizione finale
 Il container sembra avviarsi correttamente, questo il log che restituisce:
 ```
-docker-compose up
+$ docker-compose up
 [+] Running 5/5
  ⠿ traefik Pulled                                                          4.3s
    ⠿ ddad3d7c1e96 Pull complete                                            1.0s
