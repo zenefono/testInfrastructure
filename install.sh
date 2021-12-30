@@ -2,23 +2,23 @@
 
 source ./.env
 
-# TODO: sostituire bjphoster[ecc...] con variabili da ./.env;
-#+ anche in ./traefik[ecc..]/docker-compose.yml bisognerebbe sempre usare variabili,
-#+ in /get[ecc..]/docker-compose.yml sembra a posto ma ricontrolla
-
-changeBjphosterDomain(){ # usage: changeBjphosterDomain "${serviceName}" "${hostDomain}"
+sedDomain(){ # usage: changeBjphosterDomain "${serviceName}" "${egDomain}" "${hostDomain}"
+	egDomain0=$(echo "${egDomain}" | sed 's/\./\\\./g')
+	egDomain1=$(echo "${egDomain}" | sed 's/\./_/g')
+	egDomain2=$(echo "${egDomain}" | sed 's/\.//g')
+	hostDomain0=$(echo "${hostDomain}" | sed 's/\./\\\./g')
 	hostDomain1=$(echo "${hostDomain}" | sed 's/\./_/g')
 	hostDomain2=$(echo "${hostDomain}" | sed 's/\.//g')
-	for i in ./"${serviceName}"."${hostDomain}"/* ; do
-		for myCmd in "s/bjphoster\.com/${hostDomain}/g" "s/bjphoster_com/${hostDomain1}/g" \
-		"s/bjphostercom/${hostDomain2}/g" ; do
-			sed -i "$myCmd" "$i"
+	for myFile in ./"${serviceName}"."${hostDomain}"/* ; do
+		for mySed in "s/${egDomain0}/${hostDomain0}/g" "s/${egDomain1}/${hostDomain1}/g" \
+		"s/${egDomain2}/${hostDomain2}/g" ; do
+			sed -i "$mySed" "$myFile"
 		done
 	done
 }
 
 setupServiceTraefik(){	
-	changeBjphosterDomain "${serviceName}" "${hostDomain}"
+	sedDomain "${serviceName}" "${hostDomain}"
 	
 	sed -i "s/1.2.3.4/${ENVadminClientData[ipaddr]}/g" ./"${serviceName}"."${hostDomain}"/"${dotEnvModel}"
 	
@@ -31,16 +31,17 @@ setupServiceTraefik(){
 
 setupServiceGet(){
 	
-	changeBjphosterDomain "${serviceName}" "${hostDomain}"
+	sedDomain "${serviceName}" "${hostDomain}"
 	
 	sed -i "s|root /var/www/html;|root /var/www/html;\n  autoindex on;|" ./"${serviceName}"."${hostDomain}"/conf/site.conf
 }
 
-setupFromPublicRepo(){ # usage: setupFromPublicRepo "hostDomain" "serviceName" "publicRepoUri" "dotEnvModel" "dataFolder" "configFolder"
+setupFromPublicRepo(){ # usage: setupFromPublicRepo "hostDomain" "serviceName" "publicRepoUri" "egDomain" "dotEnvModel" ["dataFolder" "configFolder"]
 	hostDomain="${1}"
 	serviceName="${2}"
 	publicRepoUri="${3}"
-	dotEnvModel="${4}"
+	egDomain="${4}"
+	dotEnvModel="${5}"
 	
 	echo "clone ${serviceName} service public repo for ${hostDomain}"
 	
@@ -56,9 +57,11 @@ setupFromPublicRepo(){ # usage: setupFromPublicRepo "hostDomain" "serviceName" "
 ##########################################
 
 main() {
-	setupFromPublicRepo "${ENVhostServerData[domain]}" "${ENVreverseProxyData[name]}" "${ENVreverseProxyData[repo]}" "${ENVreverseProxyData[envmodel]}"
+	setupFromPublicRepo "${ENVhostServerData[domain]}" "${ENVreverseProxyData[name]}" \
+	"${ENVreverseProxyData[repo]}" "${ENVreverseProxyData[egdomain]}" "${ENVreverseProxyData[envmodel]}"
 	
-	setupFromPublicRepo "${ENVhostServerData[domain]}" "${ENVtestServiceData[name]}" "${ENVtestServiceData[repo]}" "${ENVtestServiceData[envmodel]}"
+	setupFromPublicRepo "${ENVhostServerData[domain]}" "${ENVtestServiceData[name]}" \
+	"${ENVtestServiceData[repo]}" "${ENVtestServiceData[egdomain]}" "${ENVtestServiceData[envmodel]}"
 	
 #	cd ./"${ENVreverseProxyData[name]}"."${hostDomain}" && docker-compose up -d
 #	cd ../"${ENVtestServiceData[name]}"."${hostDomain}" && docker-compose up -d
