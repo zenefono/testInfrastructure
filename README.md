@@ -51,8 +51,19 @@ sudo ufw allow OpenSSH
 sudo ufw allow http
 sudo ufw allow https
 ```
-Infine abilito il firewall con `sudo ufw enable` e verifico l'effettiva attivazione con `sudo ufw status`.
+Infine abilito il firewall con `sudo ufw enable` e verifico l'effettiva attivazione con `sudo ufw status` ottenendo in risposta:
+```
+Status: active
 
+To                         Action      From
+--                         ------      ----
+OpenSSH                    ALLOW       Anywhere         
+80/tcp                     ALLOW       Anywhere                  
+443/tcp                    ALLOW       Anywhere                  
+OpenSSH (v6)               ALLOW       Anywhere (v6)             
+80/tcp (v6)                ALLOW       Anywhere (v6)             
+443/tcp (v6)               ALLOW       Anywhere (v6)
+```
 
 ## Creazione ed impostazione della infrastruttura sull'host
 
