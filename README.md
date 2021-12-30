@@ -51,7 +51,7 @@ xxxxxx
 
 Per semplificare la ripetizione della procedura ho creato un semplice script, fate riferimento al contenuto di questo stesso repository pubblico, il cui file `install.sh` vi farà poi scaricare due repo altrettanto pubblici da https://github.com/bryanpedini-deployments .
 
-Clono questo repository da GitHub con il comando `git clone https://github.com/zenefono/test_bryanpedini-deployments.git`.
+Clono questo repository da GitHub con il comando `git clone https://github.com/zenefono/testInfrastructure.git`.
 Entro nella cartella, do i permessi d'esecuzione al file install.sh con i comandi `cd ./test_bryanpedini-deployments && chmod +x ./install.sh`.
 Copio il file d'esempio `example.env` in `.env` e lo modifico secondo le mie esigenze.
 Eseguo il file `./install.sh` per scaricare i repo dell'infrastruttura ed impostarli secondo il mio file `.env`.
