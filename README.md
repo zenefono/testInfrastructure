@@ -1,6 +1,6 @@
 # testInfrastructure
 
-![Non funziona](https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/mozilla/36/loudly-crying-face_1f62d.png){ width=100% }
+![Non funziona](https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/mozilla/36/loudly-crying-face_1f62d.png)
 
 
 ## Condizione iniziale
