@@ -44,7 +44,14 @@ Con il comando `dig @1.1.1.1 NS host.domain` verifico nella "ANSWER SECTION" che
 
 ## Installazione ed impostazione del firewall
 
-xxxxxx
+Dopo essermi connesso tramite SSH al server host, installo UFW (Uncomplicated Firewall) con il comando `sudo apt install ufw`.
+Poi abilito le regole per aprire le porte standard per SSG, HTTP e HTTPS con i seguenti comandi:
+```
+sudo ufw allow OpenSSH
+sudo ufw allow http
+sudo ufw allow https
+```
+Infine abilito il firewall con `sudo ufw enable` e verifico l'effettiva attivazione con `sudo ufw status`.
 
 
 ## Creazione ed impostazione della infrastruttura sull'host
