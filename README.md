@@ -52,5 +52,29 @@ Mi reco nella cartella col file `docker-compose.yml` di Traefik e lo lancio con 
 
 
 ## Condizione finale
-Il container sembra avviarsi correttamente ma, puntando il browser alla dashboard...
+Il container sembra avviarsi correttamente, questo il log che restituisce:
+```
+docker-compose up
+[+] Running 5/5
+ ⠿ traefik Pulled                                                          4.3s
+   ⠿ ddad3d7c1e96 Pull complete                                            1.0s
+   ⠿ 5f6722e60c2f Pull complete                                            1.4s
+   ⠿ 3abdcd3bb40c Pull complete                                            3.1s
+   ⠿ fe4701c53ae5 Pull complete                                            3.3s
+[+] Running 1/1
+ ⠿ Container traefik.host.domain  Creat...                                 0.2s
+Attaching to traefik.host.domain
+traefik.host.domain  | time="2021-12-30T09:47:05Z" level=info msg="Configuration loaded from flags."
+traefik.host.domain  | time="2021-12-30T09:47:05Z" level=info msg="Traefik version 2.4.14 built on 2021-08-16T15:29:25Z"
+traefik.host.domain  | time="2021-12-30T09:47:05Z" level=info msg="\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"
+traefik.host.domain  | time="2021-12-30T09:47:05Z" level=info msg="Starting provider aggregator.ProviderAggregator {}"
+traefik.host.domain  | time="2021-12-30T09:47:05Z" level=info msg="Starting provider *file.Provider {\"directory\":\"/dynamic-config\",\"watch\":true}"
+traefik.host.domain  | time="2021-12-30T09:47:05Z" level=info msg="Starting provider *traefik.Provider {}"
+traefik.host.domain  | time="2021-12-30T09:47:05Z" level=info msg="Starting provider *docker.Provider {\"watch\":true,\"endpoint\":\"unix:///var/run/docker.sock\",\"defaultRule\":\"Host(`{{ normalize .Name }}`)\",\"swarmModeRefreshSeconds\":\"15s\"}"
+traefik.host.domain  | time="2021-12-30T09:47:05Z" level=info msg="Starting provider *acme.Provider {\"email\":\"admin@mydomain.com\",\"caServer\":\"https://acme-v02.api.letsencrypt.org/directory\",\"storage\":\"/le-certs.json\",\"keyType\":\"RSA4096\",\"dnsChallenge\":{\"provider\":\"hetzner\"},\"ResolverName\":\"letsencrypt\",\"store\":{},\"TLSChallengeProvider\":{\"Timeout\":4000000000},\"HTTPChallengeProvider\":{}}"
+traefik.host.domain  | time="2021-12-30T09:47:05Z" level=info msg="Testing certificate renew..." providerName=letsencrypt.acme
+traefik.host.domain  | time="2021-12-30T09:47:05Z" level=info msg="Starting provider *acme.ChallengeTLSALPN {\"Timeout\":4000000000}"
+traefik.host.domain  | time="2021-12-30T09:47:12Z" level=info msg=Register... providerName=letsencrypt.acme
+```
+ma puntando il browser alla dashboard ottengo solo "Unable to connect" :sob:
 
