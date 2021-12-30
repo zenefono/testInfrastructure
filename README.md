@@ -42,9 +42,16 @@ Confermo cliccando su "Save changes". Lo zone file risulta simile a [questo](./z
 Con il comando `dig @1.1.1.1 NS host.domain` verifico nella "ANSWER SECTION" che il dominio punti ai nameservers di Hetzner.
 
 
+## Installazione ed impostazione del firewall
+
+xxxxxx
+
+
 ## Creazione ed impostazione della infrastruttura sull'host
 
-Clono questo stesso repository pubblico da GitHub con il comando `git clone https://github.com/zenefono/test_bryanpedini-deployments.git`.
+Per semplificare la ripetizione della procedura ho creato un semplice script, fate riferimento al contenuto di questo stesso repository pubblico, il cui file `install.sh` vi farà poi scaricare due repo altrettanto pubblici da https://github.com/bryanpedini-deployments .
+
+Clono questo repository da GitHub con il comando `git clone https://github.com/zenefono/test_bryanpedini-deployments.git`.
 Entro nella cartella, do i permessi d'esecuzione al file install.sh con i comandi `cd ./test_bryanpedini-deployments && chmod +x ./install.sh`.
 Copio il file d'esempio `example.env` in `.env` e lo modifico secondo le mie esigenze.
 Eseguo il file `./install.sh` per scaricare i repo dell'infrastruttura ed impostarli secondo il mio file `.env`.
@@ -52,6 +59,7 @@ Mi reco nella cartella col file `docker-compose.yml` di Traefik e lo lancio con 
 
 
 ## Condizione finale
+
 Il container sembra avviarsi correttamente, questo il log che restituisce:
 ```
 $ docker-compose up
@@ -64,17 +72,29 @@ $ docker-compose up
 [+] Running 1/1
  ⠿ Container traefik.host.domain  Creat...                                 0.2s
 Attaching to traefik.host.domain
-traefik.host.domain  | time="2021-12-30T09:47:05Z" level=info msg="Configuration loaded from flags."
-traefik.host.domain  | time="2021-12-30T09:47:05Z" level=info msg="Traefik version 2.4.14 built on 2021-08-16T15:29:25Z"
-traefik.host.domain  | time="2021-12-30T09:47:05Z" level=info msg="\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"
-traefik.host.domain  | time="2021-12-30T09:47:05Z" level=info msg="Starting provider aggregator.ProviderAggregator {}"
-traefik.host.domain  | time="2021-12-30T09:47:05Z" level=info msg="Starting provider *file.Provider {\"directory\":\"/dynamic-config\",\"watch\":true}"
-traefik.host.domain  | time="2021-12-30T09:47:05Z" level=info msg="Starting provider *traefik.Provider {}"
-traefik.host.domain  | time="2021-12-30T09:47:05Z" level=info msg="Starting provider *docker.Provider {\"watch\":true,\"endpoint\":\"unix:///var/run/docker.sock\",\"defaultRule\":\"Host(`{{ normalize .Name }}`)\",\"swarmModeRefreshSeconds\":\"15s\"}"
-traefik.host.domain  | time="2021-12-30T09:47:05Z" level=info msg="Starting provider *acme.Provider {\"email\":\"admin@mydomain.com\",\"caServer\":\"https://acme-v02.api.letsencrypt.org/directory\",\"storage\":\"/le-certs.json\",\"keyType\":\"RSA4096\",\"dnsChallenge\":{\"provider\":\"hetzner\"},\"ResolverName\":\"letsencrypt\",\"store\":{},\"TLSChallengeProvider\":{\"Timeout\":4000000000},\"HTTPChallengeProvider\":{}}"
-traefik.host.domain  | time="2021-12-30T09:47:05Z" level=info msg="Testing certificate renew..." providerName=letsencrypt.acme
-traefik.host.domain  | time="2021-12-30T09:47:05Z" level=info msg="Starting provider *acme.ChallengeTLSALPN {\"Timeout\":4000000000}"
-traefik.host.domain  | time="2021-12-30T09:47:12Z" level=info msg=Register... providerName=letsencrypt.acme
+traefik.billodog.ga  | time="2021-12-30T13:56:33Z" level=info msg="Configuration loaded from flags."
+traefik.billodog.ga  | time="2021-12-30T13:56:33Z" level=info msg="Traefik version 2.4.14 built on 2021-08-16T15:29:25Z"
+traefik.billodog.ga  | time="2021-12-30T13:56:33Z" level=info msg="\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"
+traefik.billodog.ga  | time="2021-12-30T13:56:33Z" level=info msg="Starting provider aggregator.ProviderAggregator {}"
+traefik.billodog.ga  | time="2021-12-30T13:56:33Z" level=info msg="Starting provider *file.Provider {\"directory\":\"/dynamic-config\",\"watch\":true}"
+traefik.billodog.ga  | time="2021-12-30T13:56:33Z" level=info msg="Starting provider *traefik.Provider {}"
+traefik.billodog.ga  | time="2021-12-30T13:56:33Z" level=info msg="Starting provider *docker.Provider {\"watch\":true,\"endpoint\":\"unix:///var/run/docker.sock\",\"defaultRule\":\"Host(`{{ normalize .Name }}`)\",\"swarmModeRefreshSeconds\":\"15s\"}"
+traefik.billodog.ga  | time="2021-12-30T13:56:33Z" level=info msg="Starting provider *acme.Provider {\"email\":\"admin@mydomain.com\",\"caServer\":\"https://acme-v02.api.letsencrypt.org/directory\",\"storage\":\"/le-certs.json\",\"keyType\":\"RSA4096\",\"dnsChallenge\":{\"provider\":\"hetzner\"},\"ResolverName\":\"letsencrypt\",\"store\":{},\"TLSChallengeProvider\":{\"Timeout\":4000000000},\"HTTPChallengeProvider\":{}}"
+traefik.billodog.ga  | time="2021-12-30T13:56:33Z" level=info msg="Testing certificate renew..." providerName=letsencrypt.acme
+traefik.billodog.ga  | time="2021-12-30T13:56:33Z" level=info msg="Starting provider *acme.ChallengeTLSALPN {\"Timeout\":4000000000}"
+traefik.billodog.ga  | time="2021-12-30T14:06:34Z" level=warning msg="A new release has been found: 2.5.6. Please consider updating."
 ```
 ma puntando il browser alla dashboard ottengo solo "Unable to connect" :sob:
 
+
+### Ulteriori test
+
+Se eseguo i comandi `ping host.domain` o `ping 123.456.78.9` il server risponde adeguatamente, se provo invece uno dei seguenti comandi:
+```
+ping host.domain:1234
+ping host.domain:80
+ping 123.456.78.9:80
+ping host.domain:443
+ping 123.456.78.9:443
+```
+ottengo sempre `ping: unknown host ...`
