@@ -1,0 +1,16 @@
+$ORIGIN host.domain.
+$TTL 86400
+; SOA Records
+@		IN	SOA	hydrogen.ns.hetzner.com. dns.hetzner.com. 2021123001 86400 10800 3600000 3600
+; NS Records
+@		IN	NS	helium.ns.hetzner.de.
+@		IN	NS	hydrogen.ns.hetzner.com.
+@		IN	NS	oxygen.ns.hetzner.com.
+; MX Records
+@		IN	MX	10 mail
+; A Records
+@		IN	A	123.456.78.9
+mail		IN	A	123.456.78.9
+www		IN	A	123.456.78.9
+; Others
+@		IN	CAA	0 issue "letsencrypt.org"
