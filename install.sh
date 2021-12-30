@@ -22,7 +22,7 @@ setupServiceTraefik(){
 	
 	sed -i "s/1.2.3.4/${ENVadminClientData[ipaddr]}/g" ./"${serviceName}"."${hostDomain}"/"${dotEnvModel}"
 	
-	sed -i "s/HETZNER_API_KEY=/HETZNER_API_KEY=${ENVcertificateProviderData[apikey]}/g" ./"${serviceName}"."${hostDomain}"/"${dotEnvModel}"
+	sed -i "s/HETZNER_API_KEY=/HETZNER_API_KEY=${ENVdnsProviderData[apikey]}/g" ./"${serviceName}"."${hostDomain}"/"${dotEnvModel}"
 	
 	touch ./"${serviceName}"."${hostDomain}"/le-certs.json
 	
