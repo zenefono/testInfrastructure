@@ -90,17 +90,17 @@ $ docker-compose up
 [+] Running 1/1
  ⠿ Container traefik.host.domain  Creat...                                 0.2s
 Attaching to traefik.host.domain
-traefik.billodog.ga  | time="2021-12-30T13:56:33Z" level=info msg="Configuration loaded from flags."
-traefik.billodog.ga  | time="2021-12-30T13:56:33Z" level=info msg="Traefik version 2.4.14 built on 2021-08-16T15:29:25Z"
-traefik.billodog.ga  | time="2021-12-30T13:56:33Z" level=info msg="\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"
-traefik.billodog.ga  | time="2021-12-30T13:56:33Z" level=info msg="Starting provider aggregator.ProviderAggregator {}"
-traefik.billodog.ga  | time="2021-12-30T13:56:33Z" level=info msg="Starting provider *file.Provider {\"directory\":\"/dynamic-config\",\"watch\":true}"
-traefik.billodog.ga  | time="2021-12-30T13:56:33Z" level=info msg="Starting provider *traefik.Provider {}"
-traefik.billodog.ga  | time="2021-12-30T13:56:33Z" level=info msg="Starting provider *docker.Provider {\"watch\":true,\"endpoint\":\"unix:///var/run/docker.sock\",\"defaultRule\":\"Host(`{{ normalize .Name }}`)\",\"swarmModeRefreshSeconds\":\"15s\"}"
-traefik.billodog.ga  | time="2021-12-30T13:56:33Z" level=info msg="Starting provider *acme.Provider {\"email\":\"admin@mydomain.com\",\"caServer\":\"https://acme-v02.api.letsencrypt.org/directory\",\"storage\":\"/le-certs.json\",\"keyType\":\"RSA4096\",\"dnsChallenge\":{\"provider\":\"hetzner\"},\"ResolverName\":\"letsencrypt\",\"store\":{},\"TLSChallengeProvider\":{\"Timeout\":4000000000},\"HTTPChallengeProvider\":{}}"
-traefik.billodog.ga  | time="2021-12-30T13:56:33Z" level=info msg="Testing certificate renew..." providerName=letsencrypt.acme
-traefik.billodog.ga  | time="2021-12-30T13:56:33Z" level=info msg="Starting provider *acme.ChallengeTLSALPN {\"Timeout\":4000000000}"
-traefik.billodog.ga  | time="2021-12-30T14:06:34Z" level=warning msg="A new release has been found: 2.5.6. Please consider updating."
+traefik.host.domain  | time="2021-12-30T13:56:33Z" level=info msg="Configuration loaded from flags."
+traefik.host.domain  | time="2021-12-30T13:56:33Z" level=info msg="Traefik version 2.4.14 built on 2021-08-16T15:29:25Z"
+traefik.host.domain  | time="2021-12-30T13:56:33Z" level=info msg="\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"
+traefik.host.domain  | time="2021-12-30T13:56:33Z" level=info msg="Starting provider aggregator.ProviderAggregator {}"
+traefik.host.domain  | time="2021-12-30T13:56:33Z" level=info msg="Starting provider *file.Provider {\"directory\":\"/dynamic-config\",\"watch\":true}"
+traefik.host.domain  | time="2021-12-30T13:56:33Z" level=info msg="Starting provider *traefik.Provider {}"
+traefik.host.domain  | time="2021-12-30T13:56:33Z" level=info msg="Starting provider *docker.Provider {\"watch\":true,\"endpoint\":\"unix:///var/run/docker.sock\",\"defaultRule\":\"Host(`{{ normalize .Name }}`)\",\"swarmModeRefreshSeconds\":\"15s\"}"
+traefik.host.domain  | time="2021-12-30T13:56:33Z" level=info msg="Starting provider *acme.Provider {\"email\":\"admin@mydomain.com\",\"caServer\":\"https://acme-v02.api.letsencrypt.org/directory\",\"storage\":\"/le-certs.json\",\"keyType\":\"RSA4096\",\"dnsChallenge\":{\"provider\":\"hetzner\"},\"ResolverName\":\"letsencrypt\",\"store\":{},\"TLSChallengeProvider\":{\"Timeout\":4000000000},\"HTTPChallengeProvider\":{}}"
+traefik.host.domain  | time="2021-12-30T13:56:33Z" level=info msg="Testing certificate renew..." providerName=letsencrypt.acme
+traefik.host.domain  | time="2021-12-30T13:56:33Z" level=info msg="Starting provider *acme.ChallengeTLSALPN {\"Timeout\":4000000000}"
+traefik.host.domain  | time="2021-12-30T14:06:34Z" level=warning msg="A new release has been found: 2.5.6. Please consider updating."
 ```
 ma puntando il browser alla dashboard ottengo solo "Unable to connect" :sob:
 
