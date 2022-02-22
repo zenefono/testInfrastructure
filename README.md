@@ -1,5 +1,12 @@
 # testInfrastructure [temporaneamente dismesso]
 
+- [ ] [Creazione ed impostazione del dominio gratuito](https://github.com/zenefono/testInfrastructure#creazione-ed-impostazione-del-dominio-gratuito-su-freenom)
+	- [x] [Creazione ed impostazione del dominio gratuito su Freenom](https://github.com/zenefono/testInfrastructure#creazione-ed-impostazione-del-dominio-gratuito-su-freenom)
+	- [x] [Impostazione dei server DNS su Hetzner](https://github.com/zenefono/testInfrastructure#impostazione-dei-server-dns-su-hetzner)
+	- [ ] [Verifica della propagazione dei DNS](https://github.com/zenefono/testInfrastructure#verifica-della-propagazione-dei-dns)
+- [x] [Installazione ed impostazione del firewall](https://github.com/zenefono/testInfrastructure#installazione-ed-impostazione-del-firewall)
+- [ ] [Creazione ed impostazione della infrastruttura sull'host](https://github.com/zenefono/testInfrastructure#creazione-ed-impostazione-della-infrastruttura-sullhost)
+
 ![Non funziona, piango](https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/mozilla/36/loudly-crying-face_1f62d.png)
 
 
